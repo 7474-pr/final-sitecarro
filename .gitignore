@@ -1,0 +1,6 @@
+# Arquivos temporários do navegador usados apenas para gerar/visualizar o PDF
+tmp/pdfs/edge-*/
+
+# Saídas temporárias de sistema
+Thumbs.db
+desktop.ini

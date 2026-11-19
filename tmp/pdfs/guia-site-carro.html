@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Guia do projeto Carro Fácil</title>
+  <style>
+    @page { size: A4; margin: 16mm 15mm 17mm; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, Helvetica, sans-serif; color: #172033; line-height: 1.45; font-size: 10.5pt; margin: 0; }
+    h1, h2, h3 { color: #0b1f4d; line-height: 1.15; }
+    h1 { font-size: 29pt; margin: 0 0 12px; }
+    h2 { font-size: 18pt; margin: 22px 0 8px; border-bottom: 2px solid #4174e3; padding-bottom: 4px; }
+    h3 { font-size: 12.5pt; margin: 15px 0 5px; }
+    p { margin: 5px 0 8px; }
+    ul, ol { margin-top: 5px; }
+    .cover { min-height: 250mm; display: flex; flex-direction: column; justify-content: center; padding: 18mm; background: linear-gradient(135deg, #0b1f4d, #4174e3); color: white; border-radius: 12px; }
+    .cover h1, .cover h2 { color: white; border: 0; }
+    .cover h2 { font-size: 16pt; font-weight: normal; margin-top: 0; }
+    .cover .tag { display: inline-block; margin-top: 18px; padding: 7px 11px; background: rgba(255,255,255,.16); border-radius: 999px; width: fit-content; }
+    .page-break { page-break-before: always; }
+    .box { background: #eef4ff; border-left: 4px solid #4174e3; padding: 9px 12px; margin: 9px 0; }
+    .warn { background: #fff5dd; border-left-color: #b7791f; }
+    code { font-family: Consolas, "Courier New", monospace; color: #103b70; }
+    pre { background: #111827; color: #e5edf8; padding: 11px 13px; border-radius: 7px; font: 8.2pt/1.42 Consolas, "Courier New", monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .small { font-size: 8.5pt; color: #526070; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 9pt; }
+    th { background: #0b1f4d; color: white; text-align: left; }
+    th, td { border: 1px solid #cdd8e8; padding: 6px 7px; vertical-align: top; }
+    tr:nth-child(even) td { background: #f7faff; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .footer { margin-top: 20px; padding-top: 6px; border-top: 1px solid #cdd8e8; font-size: 8pt; color: #667085; }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="tag">Guia didático do código</div>
+    <h1>Projeto Carro Fácil</h1>
+    <h2>HTML, CSS, Bootstrap e JavaScript explicados de forma simples</h2>
+    <p>Este material explica como o site funciona, o papel de cada arquivo, as principais tags HTML, as regras CSS, as interações JavaScript e os formulários.</p>
+    <p class="small" style="color:#dbeafe">Baseado nos arquivos do projeto local. Versão do guia: 18/11/2026.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>1. A ideia geral</h2>
+    <p>Um site pode ser comparado a uma casa:</p>
+    <table>
+      <tr><th>Parte</th><th>No site</th><th>O que faz</th></tr>
+      <tr><td>Estrutura</td><td>HTML</td><td>Cria títulos, textos, imagens, menus, cards e formulários.</td></tr>
+      <tr><td>Aparência</td><td>CSS</td><td>Define cores, fontes, tamanhos, espaços, posições e efeitos.</td></tr>
+      <tr><td>Comportamento</td><td>JavaScript</td><td>Reage a cliques, envios de formulário, login, cálculo e seleção de imagens.</td></tr>
+      <tr><td>Biblioteca visual</td><td>Bootstrap</td><td>Oferece classes prontas para botões, cards, alertas e campos.</td></tr>
+      <tr><td>Conteúdo visual</td><td>img/ e audio/</td><td>Guardam imagens, vídeo e o áudio promocional.</td></tr>
+    </table>
+    <h3>Como o navegador monta a página</h3>
+    <ol>
+      <li>Abre o arquivo HTML.</li>
+      <li>Encontra o CSS ligado pelo elemento <code>&lt;link&gt;</code>.</li>
+      <li>Aplica as regras visuais do CSS.</li>
+      <li>Baixa imagens, vídeo e áudio indicados nos atributos <code>src</code>.</li>
+      <li>Carrega o JavaScript indicado pelo elemento <code>&lt;script&gt;</code>.</li>
+      <li>O JavaScript procura elementos e adiciona ações a eles.</li>
+    </ol>
+    <h2>2. Mapa de arquivos</h2>
+    <pre>Projeto-Final-HTML-main/
+├── index.html          pagina inicial
+├── comprar.html        carros para compra
+├── vender.html         formulario de venda
+├── promocoes.html      ofertas
+├── alugar.html         aluguel e reserva
+├── suporte.html        suporte e contato
+├── revisao.html        revisao em garantia
+├── lojas.html          lojas parceiras
+├── financiar.html      simulador de financiamento
+├── entrar.html         login demonstrativo
+├── css/estilos.css     visual compartilhado
+├── js/script.js        interacoes compartilhadas
+├── img/                imagens e video
+└── audio/              audio promocional</pre>
+    <p>Cada página tem seu próprio HTML, mas todas reutilizam o mesmo CSS e o mesmo JavaScript.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>3. HTML: a estrutura da página</h2>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;link rel="stylesheet" href="css/estilos.css"&gt;
+  &lt;title&gt;Carro Fácil&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  Conteudo visivel da pagina
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    <table>
+      <tr><th>Tag ou atributo</th><th>Explicação simples</th></tr>
+      <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Informa que o documento usa HTML5.</td></tr>
+      <tr><td><code>&lt;html lang="pt-BR"&gt;</code></td><td>Inicia o documento e informa que o idioma é português do Brasil.</td></tr>
+      <tr><td><code>&lt;head&gt;</code></td><td>Guarda configurações, título, CSS e informações da página.</td></tr>
+      <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Permite acentos como ã, ç e é.</td></tr>
+      <tr><td><code>&lt;meta name="viewport"...&gt;</code></td><td>Faz a página se adaptar à largura do celular.</td></tr>
+      <tr><td><code>&lt;link&gt;</code></td><td>Conecta um arquivo externo, neste caso o CSS e o Bootstrap.</td></tr>
+      <tr><td><code>&lt;title&gt;</code></td><td>Texto que aparece na aba do navegador.</td></tr>
+      <tr><td><code>&lt;body&gt;</code></td><td>Contém o que o visitante vê.</td></tr>
+    </table>
+    <h3>Tags semânticas</h3>
+    <p>O projeto usa tags com significado, e não apenas caixas genéricas:</p>
+    <ul>
+      <li><code>&lt;header&gt;</code>: cabeçalho.</li>
+      <li><code>&lt;nav&gt;</code>: menu de navegação.</li>
+      <li><code>&lt;main&gt;</code>: conteúdo principal.</li>
+      <li><code>&lt;section&gt;</code>: seção de conteúdo.</li>
+      <li><code>&lt;article&gt;</code>: conteúdo independente, como um card de carro.</li>
+      <li><code>&lt;footer&gt;</code>: rodapé.</li>
+    </ul>
+    <h3>Classes e IDs</h3>
+    <pre>&lt;section class="apresentacao" id="titulo-principal"&gt;
+  &lt;h1&gt;Encontre o carro ideal&lt;/h1&gt;
+&lt;/section&gt;</pre>
+    <p><code>class</code> pode ser reutilizada em vários elementos. <code>id</code> identifica normalmente um elemento único. No CSS, classe começa com ponto, e ID começa com cerquilha.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>4. Menu, textos, imagens e links</h2>
+    <pre>&lt;header class="cabecalho"&gt;
+  &lt;a class="identidade" href="index.html"&gt;Carro Fácil&lt;/a&gt;
+  &lt;nav class="navbar" aria-label="Navegação principal"&gt;
+    &lt;a href="comprar.html"&gt;Comprar&lt;/a&gt;
+    &lt;a href="vender.html"&gt;Vender&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;</pre>
+    <table>
+      <tr><th>Parte</th><th>Função</th></tr>
+      <tr><td><code>href="comprar.html"</code></td><td>Indica a página que será aberta ao clicar.</td></tr>
+      <tr><td><code>aria-label</code></td><td>Ajuda leitores de tela a entenderem a função do menu.</td></tr>
+      <tr><td><code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code></td><td>Organizam títulos por importância.</td></tr>
+      <tr><td><code>&lt;p&gt;</code></td><td>Cria um parágrafo.</td></tr>
+      <tr><td><code>&lt;img src="..." alt="..."&gt;</code></td><td>Mostra imagem; <code>alt</code> descreve a imagem.</td></tr>
+    </table>
+    <h3>Cards</h3>
+    <pre>&lt;article class="card card-promocao"&gt;
+  &lt;img src="img/veiculo-01-estudio.png" alt="Carro prata"&gt;
+  &lt;h2&gt;Fusion 2008&lt;/h2&gt;
+  &lt;p&gt;R$ 45.000,00&lt;/p&gt;
+&lt;/article&gt;</pre>
+    <p>O primeiro nome, <code>card</code>, vem do Bootstrap. O segundo, <code>card-promocao</code>, é uma classe criada no CSS do projeto para personalizar o card.</p>
+    <h3>Detalhes que abrem e fecham</h3>
+    <pre>&lt;details&gt;
+  &lt;summary&gt;Ver detalhes&lt;/summary&gt;
+  &lt;p&gt;Informacoes tecnicas do carro.&lt;/p&gt;
+&lt;/details&gt;</pre>
+    <p><code>&lt;details&gt;</code> cria uma área que pode ser aberta sem precisar de JavaScript.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>5. Formulários e validação</h2>
+    <pre>&lt;form class="formulario-contato p-3" id="formulario-contato"&gt;
+  &lt;label for="nome-contato"&gt;Nome&lt;/label&gt;
+  &lt;input class="form-control" type="text" id="nome-contato"
+    placeholder="Seu nome"
+    pattern="[A-Za-zÀ-ÿ ]{2,}" required&gt;
+
+  &lt;label for="email-contato"&gt;E-mail&lt;/label&gt;
+  &lt;input class="form-control" type="email" id="email-contato"
+    placeholder="voce@exemplo.com" required&gt;
+
+  &lt;select class="form-select" id="assunto-contato" required&gt;
+    &lt;option value=""&gt;Escolha um assunto&lt;/option&gt;
+    &lt;option&gt;Comprar um carro&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;textarea class="form-control" id="mensagem-contato"
+    placeholder="Explique como podemos ajudar" required&gt;&lt;/textarea&gt;
+
+  &lt;button class="btn btn-primary botao-formulario" type="submit"&gt;
+    Enviar mensagem
+  &lt;/button&gt;
+&lt;/form&gt;</pre>
+    <table>
+      <tr><th>Elemento</th><th>O que faz</th></tr>
+      <tr><td><code>&lt;form&gt;</code></td><td>Agrupa os campos que serão enviados.</td></tr>
+      <tr><td><code>&lt;label&gt;</code></td><td>Nome visível do campo. O <code>for</code> aponta para o <code>id</code>.</td></tr>
+      <tr><td><code>type="text"</code></td><td>Entrada de texto.</td></tr>
+      <tr><td><code>type="email"</code></td><td>Entrada que precisa parecer um e-mail válido.</td></tr>
+      <tr><td><code>required</code></td><td>Impede o envio quando o campo está vazio.</td></tr>
+      <tr><td><code>placeholder</code></td><td>Texto de orientação que desaparece quando o usuário digita.</td></tr>
+      <tr><td><code>minlength="6"</code></td><td>Exige uma quantidade mínima de caracteres.</td></tr>
+      <tr><td><code>pattern</code></td><td>Define um padrão que o valor precisa obedecer.</td></tr>
+      <tr><td><code>type="submit"</code></td><td>Envia o formulário.</td></tr>
+    </table>
+    <div class="box">O formulário do projeto é demonstrativo: o JavaScript mostra uma mensagem, mas não envia os dados para um servidor.</div>
+  </section>
+
+  <section class="page-break">
+    <h2>6. CSS: aparência e organização</h2>
+    <p>O arquivo <code>css/estilos.css</code> é compartilhado por todas as páginas. Isso evita repetir o mesmo estilo em cada HTML.</p>
+    <h3>Variáveis de cor</h3>
+    <pre>:root {
+  --azul-escuro: #0b1f4d;
+  --azul: #4174e3;
+  --fundo: #f3f7fc;
+  --branco: #fff;
+}
+
+body {
+  color: var(--texto);
+  background: var(--fundo);
+}</pre>
+    <p><code>:root</code> guarda variáveis globais. <code>var(--fundo)</code> usa o valor armazenado na variável.</p>
+    <h3>Exemplo de regra CSS</h3>
+    <pre>.botao-formulario:hover {
+  background: var(--azul);
+  transform: translateY(-1px);
+}</pre>
+    <p>O seletor é <code>.botao-formulario:hover</code>. Ele significa: procure elementos com essa classe quando o mouse estiver sobre eles. As linhas dentro das chaves são as mudanças visuais.</p>
+    <h3>Estados dos campos</h3>
+    <pre>form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: var(--azul);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(65, 116, 227, .2);
+}
+
+form input:invalid {
+  border-color: var(--vermelho);
+}</pre>
+    <ul>
+      <li><code>:hover</code>: mouse sobre o elemento.</li>
+      <li><code>:focus</code>: elemento selecionado pelo clique ou teclado.</li>
+      <li><code>:invalid</code>: valor não aceito pela validação HTML.</li>
+    </ul>
+    <h3>Responsividade</h3>
+    <p>O site usa Flexbox, Grid, <code>clamp()</code> e media queries. Assim, os cards podem ficar lado a lado em telas grandes e empilhados em telas pequenas.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>7. A barra horizontal de carros do index.html</h2>
+    <p>Essa é uma das partes que parecem difíceis, mas ela é feita apenas com HTML e CSS. No [index.html], existe uma caixa chamada <code>imagens</code> com vários links, e cada link contém uma imagem e o nome do carro.</p>
+    <pre>&lt;div class="imagens" aria-label="Modelos em destaque"&gt;
+  &lt;a href="comprar.html#carro-1"&gt;
+    &lt;img src="img/veiculo-01-estudio.png" alt="Carro prata"&gt;
+    &lt;span&gt;Fusion 2008&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;a href="comprar.html#carro-2"&gt;... outro carro ...&lt;/a&gt;
+&lt;/div&gt;</pre>
+    <p>O segredo está nestas regras do <code>estilos.css</code>:</p>
+    <pre>.imagens {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+}
+
+.imagens a {
+  scroll-snap-align: start;
+}</pre>
+    <table>
+      <tr><th>Linha</th><th>Explicação simples</th></tr>
+      <tr><td><code>display: grid</code></td><td>Ativa o sistema de grade do CSS.</td></tr>
+      <tr><td><code>grid-auto-flow: column</code></td><td>Coloca os cards em uma linha horizontal, em vez de empilhar todos em uma coluna.</td></tr>
+      <tr><td><code>grid-auto-columns</code></td><td>Define a largura de cada card. Cada um tem pelo menos 220 pixels.</td></tr>
+      <tr><td><code>minmax(220px, 1fr)</code></td><td>O card nunca fica menor que 220px, mas pode crescer quando houver espaço.</td></tr>
+      <tr><td><code>gap: 16px</code></td><td>Cria espaço entre os cards.</td></tr>
+      <tr><td><code>overflow-x: auto</code></td><td>Quando não cabe tudo, cria uma barra para rolar para a direita e para a esquerda.</td></tr>
+      <tr><td><code>scroll-snap-type: x mandatory</code></td><td>Ajuda a rolagem a parar alinhada em cada card.</td></tr>
+      <tr><td><code>scroll-snap-align: start</code></td><td>Define o ponto em que cada card deve parar.</td></tr>
+    </table>
+    <div class="box">A letra <code>x</code> significa o eixo horizontal. Se fosse <code>overflow-y: auto</code>, a rolagem seria vertical.</div>
+    <h3>Como criar uma barra assim em outra página</h3>
+    <ol>
+      <li>Crie uma div com uma classe, por exemplo <code>class="lista-horizontal"</code>.</li>
+      <li>Coloque vários cards dentro dela.</li>
+      <li>Use <code>display: grid</code> e <code>grid-auto-flow: column</code>.</li>
+      <li>Defina uma largura mínima para os cards.</li>
+      <li>Adicione <code>overflow-x: auto</code>.</li>
+      <li>Teste no celular arrastando a lista para os lados.</li>
+    </ol>
+  </section>
+
+  <section class="page-break">
+    <h2>8. Outras partes difíceis explicadas</h2>
+    <h3>Grid de cards</h3>
+    <pre>.grade-cartoes-servicos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}</pre>
+    <p><code>repeat(3, ...)</code> cria três colunas. <code>1fr</code> divide igualmente o espaço disponível. Em uma media query, o projeto reduz o número de colunas para caber em telas menores.</p>
+    <h3>Flexbox do cabeçalho</h3>
+    <pre>.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}</pre>
+    <ul>
+      <li><code>display: flex</code>: coloca os elementos lado a lado.</li>
+      <li><code>align-items: center</code>: centraliza verticalmente.</li>
+      <li><code>justify-content: space-between</code>: separa logo e menu.</li>
+      <li><code>gap</code>: cria espaço entre os elementos.</li>
+    </ul>
+    <h3>Imagem dentro do card</h3>
+    <pre>.imagens img {
+  width: 100%;
+  height: 170px;
+  object-fit: contain;
+  background: #eef3fa;
+}</pre>
+    <p><code>width: 100%</code> faz a imagem ocupar a largura do card. <code>height</code> padroniza a altura. <code>object-fit: contain</code> mostra o carro inteiro sem cortar a imagem.</p>
+    <h3>O efeito de aumentar a imagem</h3>
+    <pre>.imagens a:hover img {
+  transform: scale(1.03);
+}</pre>
+    <p>Quando o mouse passa sobre o link, a imagem aumenta para 103% do tamanho original. O seletor tem um espaço: ele significa "a imagem dentro do link que está com hover".</p>
+    <h3>Details e summary</h3>
+    <pre>&lt;details&gt;
+  &lt;summary&gt;Ver detalhes&lt;/summary&gt;
+  &lt;p&gt;Descricao do veiculo.&lt;/p&gt;
+&lt;/details&gt;</pre>
+    <p>Essa dupla cria um painel que abre e fecha sozinho. É uma solução simples quando você não precisa programar o clique com JavaScript.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>9. Como criar componentes parecidos</h2>
+    <h3>Exemplo: criar uma nova lista horizontal</h3>
+    <pre>&lt;section aria-labelledby="titulo-novidades"&gt;
+  &lt;h2 id="titulo-novidades"&gt;Novidades&lt;/h2&gt;
+  &lt;div class="lista-horizontal"&gt;
+    &lt;article class="card-novidade"&gt;
+      &lt;img src="img/carro.png" alt="Carro novo"&gt;
+      &lt;h3&gt;Nome do carro&lt;/h3&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+    <pre>.lista-horizontal {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+}
+
+.card-novidade {
+  padding: 16px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background: var(--branco);
+}</pre>
+    <h3>Como criar um botão com ação</h3>
+    <pre>&lt;button id="botao-oferta" class="btn btn-primary"&gt;
+  Ver oferta
+&lt;/button&gt;
+&lt;p id="mensagem-oferta"&gt;&lt;/p&gt;</pre>
+    <pre>var botaoOferta = document.querySelector("#botao-oferta");
+var mensagemOferta = document.querySelector("#mensagem-oferta");
+
+botaoOferta.addEventListener("click", function () {
+  mensagemOferta.textContent = "Oferta selecionada!";
+});</pre>
+    <p>Primeiro o HTML cria o botão e a área da mensagem. Depois o JavaScript encontra os dois elementos e escuta o clique. Quando o clique acontece, <code>textContent</code> troca o texto.</p>
+    <h3>Como criar um novo formulário</h3>
+    <ol>
+      <li>Crie o <code>&lt;form&gt;</code> com um <code>id</code>.</li>
+      <li>Adicione um <code>&lt;label&gt;</code> para cada campo.</li>
+      <li>Use o tipo correto no <code>&lt;input&gt;</code>.</li>
+      <li>Adicione <code>required</code> quando o campo for obrigatório.</li>
+      <li>Crie um botão com <code>type="submit"</code>.</li>
+      <li>No JavaScript, use <code>addEventListener("submit", ...)</code>.</li>
+      <li>Use <code>preventDefault()</code> se o formulário for apenas uma demonstração.</li>
+    </ol>
+  </section>
+
+  <section class="page-break">
+    <h2>10. Como entender e corrigir problemas</h2>
+    <table>
+      <tr><th>Problema</th><th>O que verificar</th></tr>
+      <tr><td>Imagem não aparece</td><td>Confira o caminho, o nome, a extensão e letras maiúsculas ou minúsculas.</td></tr>
+      <tr><td>Vídeo não carrega</td><td>Use caminho relativo, como <code>img/video.mp4</code>, e informe <code>type="video/mp4"</code>.</td></tr>
+      <tr><td>CSS não funciona</td><td>Confira se existe <code>&lt;link rel="stylesheet" href="css/estilos.css"&gt;</code>.</td></tr>
+      <tr><td>JavaScript não funciona</td><td>Confira o caminho <code>js/script.js</code> e o console do navegador.</td></tr>
+      <tr><td>Botão envia e recarrega</td><td>Adicione um listener de <code>submit</code> e use <code>preventDefault()</code>.</td></tr>
+      <tr><td>Card fica espremido</td><td>Use uma largura mínima e <code>overflow-x: auto</code> ou reduza as colunas no celular.</td></tr>
+      <tr><td>Campo não aceita o valor</td><td>Veja <code>required</code>, <code>pattern</code>, <code>minlength</code> e o tipo do campo.</td></tr>
+    </table>
+    <h3>Uma forma simples de investigar</h3>
+    <ol>
+      <li>Leia o erro no console do navegador.</li>
+      <li>Confira se o arquivo realmente existe.</li>
+      <li>Confira se o caminho é relativo à página HTML.</li>
+      <li>Teste uma alteração pequena por vez.</li>
+      <li>Atualize a página e teste novamente.</li>
+    </ol>
+    <div class="box warn"><strong>Exemplo do projeto:</strong> o vídeo da página inicial usa um caminho completo do Windows. O ideal é trocar por um caminho relativo dentro da pasta <code>img/</code>, porque o caminho completo só existe no computador que o criou.</div>
+  </section>
+
+  <section class="page-break">
+    <h2>11. Bootstrap</h2>
+    <p>Bootstrap é uma biblioteca de estilos pronta. O projeto importa o arquivo CSS pelo CDN:</p>
+    <pre>&lt;link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"&gt;</pre>
+    <table>
+      <tr><th>Classe</th><th>Função</th></tr>
+      <tr><td><code>navbar</code></td><td>Classe de apoio para o menu.</td></tr>
+      <tr><td><code>btn btn-primary</code></td><td>Botão com estilo principal.</td></tr>
+      <tr><td><code>form-control</code></td><td>Campo de texto com aparência padronizada.</td></tr>
+      <tr><td><code>form-select</code></td><td>Lista de opções padronizada.</td></tr>
+      <tr><td><code>card</code></td><td>Base visual de um card.</td></tr>
+      <tr><td><code>alert alert-warning</code></td><td>Aviso amarelo.</td></tr>
+      <tr><td><code>alert alert-success</code></td><td>Aviso verde de sucesso.</td></tr>
+      <tr><td><code>p-3</code></td><td>Espaçamento interno.</td></tr>
+    </table>
+    <p>O Bootstrap não substitui o CSS próprio. Ele oferece uma base, enquanto <code>estilos.css</code> mantém a identidade azul do Carro Fácil.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>12. JavaScript: comportamento</h2>
+    <p>O arquivo <code>js/script.js</code> começa procurando elementos:</p>
+    <pre>var formularioLogin = document.querySelector("#formulario-login");
+
+if (formularioLogin) {
+  formularioLogin.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+    // codigo que reage ao envio
+  });
+}</pre>
+    <table>
+      <tr><th>Trecho</th><th>Explicação</th></tr>
+      <tr><td><code>var</code></td><td>Cria uma variável para guardar um valor.</td></tr>
+      <tr><td><code>document</code></td><td>Representa a página HTML aberta.</td></tr>
+      <tr><td><code>querySelector</code></td><td>Procura um elemento pelo seletor CSS.</td></tr>
+      <tr><td><code>if</code></td><td>Executa um bloco somente se a condição for verdadeira.</td></tr>
+      <tr><td><code>addEventListener</code></td><td>Escuta um evento, como clique, envio ou mudança.</td></tr>
+      <tr><td><code>preventDefault()</code></td><td>Impede o comportamento automático do navegador.</td></tr>
+      <tr><td><code>textContent</code></td><td>Altera o texto de um elemento.</td></tr>
+      <tr><td><code>innerHTML</code></td><td>Altera o conteúdo HTML interno de um elemento.</td></tr>
+    </table>
+    <h3>Login e localStorage</h3>
+    <pre>localStorage.setItem("carroFacilEmail", email);
+var emailSalvo = localStorage.getItem("carroFacilEmail");
+localStorage.removeItem("carroFacilEmail");</pre>
+    <p><code>setItem</code> salva, <code>getItem</code> recupera e <code>removeItem</code> apaga. O valor continua no navegador mesmo depois de atualizar a página.</p>
+    <h3>Simulador</h3>
+    <p>O JavaScript lê o valor do carro, a entrada e a quantidade de parcelas. Depois calcula a parcela com fórmulas e escreve o resultado dentro de uma área da página.</p>
+  </section>
+
+  <section class="page-break">
+    <h2>13. Funcionalidades principais</h2>
+    <table>
+      <tr><th>Funcionalidade</th><th>Como funciona</th><th>Arquivo principal</th></tr>
+      <tr><td>Menu</td><td>Links HTML levam para cada página.</td><td>Todos os HTML</td></tr>
+      <tr><td>Cards de carros</td><td>HTML apresenta imagem, modelo, preço e detalhes.</td><td>comprar.html e promoções.html</td></tr>
+      <tr><td>Login</td><td>JavaScript valida a senha e salva o e-mail localmente.</td><td>entrar.html e script.js</td></tr>
+      <tr><td>Financiamento</td><td>JavaScript calcula uma estimativa de parcela.</td><td>financiar.html e script.js</td></tr>
+      <tr><td>Venda</td><td>Formulário e prévia das fotos escolhidas.</td><td>vender.html e script.js</td></tr>
+      <tr><td>Contato</td><td>Validação nativa e mensagem de confirmação.</td><td>suporte.html e script.js</td></tr>
+      <tr><td>Áudio</td><td>Player HTML usa arquivo MP3 local.</td><td>index.html e audio/</td></tr>
+      <tr><td>Vídeo</td><td>Player HTML usa elemento video e imagem de capa.</td><td>index.html e img/</td></tr>
+    </table>
+    <div class="box warn"><strong>Importante:</strong> login, reserva, financiamento e formulários são demonstrações front-end. Eles ainda não gravam dados em um banco nem enviam mensagens reais.</div>
+  </section>
+
+  <section class="page-break">
+    <h2>14. Como alterar o site</h2>
+    <ol>
+      <li>Para mudar um título ou texto, edite o HTML da página correspondente.</li>
+      <li>Para mudar uma cor geral, altere as variáveis no início de <code>estilos.css</code>.</li>
+      <li>Para mudar o visual de todos os botões, edite a regra <code>.botao-formulario</code>.</li>
+      <li>Para adicionar um carro, copie um card e troque imagem, nome e preço.</li>
+      <li>Para adicionar um item ao menu, copie um link dentro de <code>&lt;nav&gt;</code> em todas as páginas.</li>
+      <li>Para criar uma nova interação, procure o formulário ou botão com <code>querySelector</code> no JavaScript.</li>
+    </ol>
+    <h3>Cuidados importantes</h3>
+    <ul>
+      <li>Use caminhos relativos, como <code>img/carro.png</code>, e não caminhos completos do Windows.</li>
+      <li>Mantenha o mesmo nome de arquivo nos links e nas pastas.</li>
+      <li>Não coloque senhas reais no <code>localStorage</code>.</li>
+      <li>Se publicar o site, confira se o Bootstrap e todos os arquivos de mídia carregam.</li>
+      <li>Para o GitHub público, o projeto precisa ser colocado em um repositório e receber um link público.</li>
+    </ul>
+    <h2>Conclusão</h2>
+    <p>O Carro Fácil é um projeto front-end completo para fins demonstrativos. O HTML organiza a página, o CSS cria o visual, o Bootstrap ajuda com componentes prontos e o JavaScript adiciona as ações. Entendendo esses quatro papéis, você consegue ler, explicar e modificar o site com segurança.</p>
+    <div class="footer">Guia didático do projeto Carro Fácil - material gerado a partir dos arquivos locais do projeto.</div>
+  </section>
+</body>
+</html>
